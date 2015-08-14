@@ -25,6 +25,7 @@ youwontController.controller('loginCtrl', function ($scope,authLogin) {
 
 youwontController.controller('friendsCtrl', function ($scope,authLogin,DatabaseService) {
     DatabaseService.getFriends(function(friends){
+      console.dir(friends)
       $scope.friends = friends;
     });
    $scope.addFriend = DatabaseService.addFriend;

@@ -120,45 +120,55 @@ angular.module('youwont.services', [])
           id: facebookID,
           name: userName,
           profilePicture: userProfilePicture,
-          friends: { "Mark Robson" :{id:"10153502325756226",name:"Mark Robson"}}
+          friends: { "Mark Robson" :{id:"10153502325756226",name:"Mark Robson"}},
+          challenges: []
         });    
       }
     };
 
+    db.addChallengeToUser = function(challenge){
+      
+    }
     db.addNewChallenge = function(challenge) {
 
       var currentUser = db.ref.getAuth().uid;
       var obj = {};
       db.ref = new Firebase("https://sayiwont.firebaseio.com/challenges/");
-
-      if (challenge && challenge.title && challenge.description){
-        obj[challenge.id] = challenge;
-        getBase64FromFile(challenge.clip, function (data) {
-          challenge.clip = data;
-          getBase64FromFile(challenge.img, function (data) {
-            challenge.img = data;
-            db.ref.child(currentUser).set(obj);
+      db.getFriends(function(friendsList){
+        if (challenge && challenge.title && challenge.description){
+          challenge['friends'] = friendsList;
+          obj[challenge.id] = challenge;
+          getBase64FromFile(challenge.clip, function (data) {
+            challenge.clip = data;
+            getBase64FromFile(challenge.img, function (data) {
+              challenge.img = data;
+              db.ref.child(currentUser).set(obj);
+            });
           });
-        });
-      } else {
-        console.error('addNewChallenge is missing params')
-      }
+
+        } else {
+          console.error('addNewChallenge is missing params')
+        }
+      })
+      
     };
 
     db.addFriend = function(friend,callback){
-        //get user object  
-        var currentUser = db.ref.getAuth().facebook.displayName;
-      
-        db.ref.child('users').orderByChild('name').equalTo(currentUser).on('child_added',  function(snapshot){ 
+        //get user object
         
-          if (friend){
+        var currentUser = db.ref.getAuth().uid;
+        var ref = new Firebase("https://sayiwont.firebaseio.com/users/"+currentUser+"/friends");
+        if (friend){
            //
+           var friendObject = {
+            id: friend.id,
+            name: friend.name,
+            profilePicture: friend.profilePicture
+           }
+           
+        ref.child(friendObject.id).set(friendObject);
+      }
 
-            
-          }
-          //add friend to user object's friends array
-          //snapshot.val().friends.push(friend)
-        })
     }
 
     db.getFriends = function(callback){
