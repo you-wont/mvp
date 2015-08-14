@@ -120,51 +120,36 @@ angular.module('youwont.services', [])
           id: facebookID,
           name: userName,
           profilePicture: userProfilePicture,
-          friends: { "Mark Robson" :{id:"10153502325756226",name:"Mark Robson"}}
+          friends: {
+            "Mark Robson" :{id:"10153502325756226",name:"Mark Robson" }
+          }
         });    
       }
     };
 
     db.addNewChallenge = function(challenge) {
-
       var currentUser = db.ref.getAuth().uid;
       var obj = {};
       db.ref = new Firebase("https://sayiwont.firebaseio.com/challenges/");
-
-      if (challenge && challenge.title && challenge.description){
-        obj[challenge.id] = challenge;
-        // $cordovaFile.readAsDataURL(challenge.clip)
-        //   .then(function (err, data) {
-        //     console.log("err: ", err);
-        //     console.log("got the data: ", data);
-        //     //db.ref.child(currentUser).set(obj);
-        //   }, function (err) {
-        //     console.log(err);
-        //   })
-        getBase64FromFile(challenge.clip, function (data) {
-          challenge.clip = data;
-          getBase64FromFile(challenge.img, function (data) {
-            challenge.img = data;
-            console.log("full object", obj);
-            console.log("pushing! =====================================");
-            db.ref.child(currentUser).set(obj);
+      db.getFriends(function(friendsList){
+        if (challenge && challenge.title && challenge.description){
+          challenge['friends'] = [];
+          angular.forEach(friendsList, function (item, collection) {
+            challenge['friends'] = item.id;
           });
-        });
-        //read image thumb
-        //get binary data and convert to base64
-        //read video file
-        //get binary data and convert to base64
-        //upload
-        // $scope.challenge.clip = "data:video/quicktime;base64," + btoa(videoData);
-        // $scope.challenge.img = "data:image/png;base64," + btoa($scope.generateThumb(data));
+          obj[challenge.id] = challenge;
+          getBase64FromFile(challenge.clip, function (data) {
+            challenge.clip = "data:video/quicktime;base64," + data;
+            getBase64FromFile(challenge.img, function (data) {
+              challenge.img = "data:image/png;base64," + data;
+              db.ref.child(currentUser).set(obj);
+            });
+          });
 
-        //"data:video/quicktime;base64"
-        //"data:image/png;base64"
-
-      } else {
-        console.error('addNewChallenge is missing params')
-      }
-
+        } else {
+          console.error('addNewChallenge is missing params')
+        }
+      })
     };
 
     db.addFriend = function(friend,callback){

@@ -126,23 +126,28 @@ angular.module('youwont.services', [])
     };
 
     db.addNewChallenge = function(challenge) {
-
       var currentUser = db.ref.getAuth().uid;
       var obj = {};
       db.ref = new Firebase("https://sayiwont.firebaseio.com/challenges/");
-
-      if (challenge && challenge.title && challenge.description){
-        obj[challenge.id] = challenge;
-        getBase64FromFile(challenge.clip, function (data) {
-          challenge.clip = data;
-          getBase64FromFile(challenge.img, function (data) {
-            challenge.img = data;
-            db.ref.child(currentUser).set(obj);
+      db.getFriends(function(friendsList){
+        if (challenge && challenge.title && challenge.description){
+          challenge['friends'] = [];
+          angular.forEach(friendsList, function (item, collection) {
+            challenge['friends'] = item.id;
           });
-        });
-      } else {
-        console.error('addNewChallenge is missing params')
-      }
+          obj[challenge.id] = challenge;
+          getBase64FromFile(challenge.clip, function (data) {
+            challenge.clip = "data:video/quicktime;base64," + data;
+            getBase64FromFile(challenge.img, function (data) {
+              challenge.img = "data:image/png;base64," + data;
+              db.ref.child(currentUser).set(obj);
+            });
+          });
+
+        } else {
+          console.error('addNewChallenge is missing params')
+        }
+      })
     };
 
     db.addFriend = function(friend,callback){

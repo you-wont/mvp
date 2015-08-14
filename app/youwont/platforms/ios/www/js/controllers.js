@@ -85,16 +85,6 @@ youwontController.controller('videoCtrl', function ($scope, challenges, $ionicPl
     return sliced + '.png';
   }
 
-  // $scope.testChallenge = function(){
-  //   //console.log('title: ' + $scope.challenge.title);
-  //   var title = $scope.challenge.title;
-  //   var description = $scope.challenge.description;
-  //   var user = $scope.user;
-  //   console.log('usr: ' + user)
-  //   //console.log('description: ' + $scope.challenge.description)
-  //   DatabaseService.addNewChallenge(title,description,user);
-  // }
-
   $scope.save = function () {
     var newChallenge;
     if ($scope.challenge.img && !!$scope.challenge.clip) {
