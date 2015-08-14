@@ -1,0 +1,38 @@
+<ion-content ng-controller"responsesCtrl">
+  <ion-list ng-show="{{challenge}}">
+    <!-- Challenge Header -->
+    <div class="item item-divider">
+      {{challenge.title}}
+    </div>
+    <!-- Display Current Challenge -->
+    <ion-item>
+        <a class="item item-thumbnail-left" href="#">
+          <img src="ata:image/png;base64,{{challenge.img}}" alt="chall">
+          <h2>{{challenge.title}}</h2>
+          <p>{{challenge.description}}</p>
+          <p>{{challenge.people}}</p> 
+          <i class="icon ion-heart">{{challenge.likes}}</i>
+        </a>
+    </ion-item>
+    <!-- Responses divider -->
+    <div class="item item-divider">Responses to {{challenge.title}}</div>
+    <!-- Display responses -->
+    <ion-item ng-repeat="response in challenge.responses">
+      <a class="item item-thumbnail-left" href="#">
+        <img src="" alt="chall">
+        <h2>{{response.title}}</h2>
+        <p>{{response.description}}</p>
+        <p>{{response.people}}</p> 
+        <i class="icon ion-heart">{{response.likes}}</i>
+      </a>
+    </ion-item>
+
+  </ion-list>
+
+  <ion-card ng-show="{{!challenge}}">
+    <ion-item class="item-text-wrap">
+      No challenge videos.
+    </ion-item>
+  </ion-card>
+
+</ion-content>

@@ -1,0 +1,22 @@
+<ion-content ng-controller"challengeCtrl" style="margin-bottom: 100px;">
+  <ion-list ng-show="challenges.length > 0">
+    <div ng-repeat="challenge in challenges" ui-sref="response({{challenge}})">
+{{challenge}}
+      <!-- Challenge Header -->
+      <div class="item item-divider">{{challenge.title}}</div>
+      <ion-item>
+        <a ui-sref="responses" class="item item-thumbnail-left">
+          <img src="{{$sce.trustAsResourceUrl(challenge.img)}}" alt="chall">
+          <p>{{challenge.description}}</p>
+          <p>{{challenge.people}}</p> 
+          <i class="icon ion-heart">{{challenge.likes}}</i>
+        </a>
+      </ion-item>
+    </div>
+  </ion-list>
+  <ion-card ng-show="challenges.length === 0">
+    <ion-item class="item-text-wrap">
+      Get started by creating a new challenge video!
+    </ion-item>
+  </ion-card>
+</ion-content>

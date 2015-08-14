@@ -1,0 +1,12 @@
+/* Empty. Add your own CSS if you like */
+
+#fbLoginButton{
+
+	position:absolute;
+	left:20%;
+	margin-top:20%;
+	width:60%;
+	font-size:18px;
+	border-radius: 25px;
+	
+}

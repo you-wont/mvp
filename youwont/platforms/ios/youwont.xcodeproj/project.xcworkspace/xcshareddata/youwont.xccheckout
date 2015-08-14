@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>7E146420-B832-4827-A60A-2484CB9ED0FC</string>
+	<key>IDESourceControlProjectName</key>
+	<string>project</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>0143D44702F06B863F170E9D26994BA980BB7D19</key>
+		<string>github.com:roppa/chartreuse-triceratops.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>app/youwont/platforms/ios/youwont.xcodeproj/project.xcworkspace</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>0143D44702F06B863F170E9D26994BA980BB7D19</key>
+		<string>../../../../../..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>github.com:roppa/chartreuse-triceratops.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>111</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>0143D44702F06B863F170E9D26994BA980BB7D19</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>0143D44702F06B863F170E9D26994BA980BB7D19</string>
+			<key>IDESourceControlWCCName</key>
+			<string>chartreuse-triceratops</string>
+		</dict>
+	</array>
+</dict>
+</plist>

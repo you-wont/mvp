@@ -1,0 +1,20 @@
+{
+    "version": "1.0.1",
+    "name": "com.photokandy.videothumbnail",
+    "cordova_name": "Video Thumbnail",
+    "description": "Create video thumbnails from video files; iOS 6+, Android 2.x+",
+    "license": "MIT",
+    "keywords": [
+        "video",
+        " thumbnail",
+        " ios",
+        " ios7",
+        " android"
+    ],
+    "engines": [
+        {
+            "name": "cordova",
+            "version": ">=2.9.0"
+        }
+    ]
+}

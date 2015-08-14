@@ -1,0 +1,20 @@
+<ion-content ng-controller="videoCtrl">
+  <ion-list ng-model="challenge">
+    <ion-item>
+      <label class="item item-input item-floating-label">
+        <span class="input-label">Title</span>
+        <input type="text" placeholder="Title" ng-model="challenge.title">
+      </label>
+      <label class="item item-input item-floating-label">
+        <span class="input-label">Description</span>
+        <input type="text" placeholder="Description" ng-model="challenge.description">
+      </label>
+      <div class="item item-body" style="margin-bottom: 100px;">
+        <video ng-show="challenge.img" src="{{challenge.clip}}" poster="{{challenge.img}}"></video>
+        <button class="button button-block icon-right ion-videocamera button-dark" ng-click="captureVideo()">{{ challenge.clip ? "Retake video" : "Take video" }}</button>
+        <button ng-show="challenge.clip" class="button button-block icon-right button-balanced" ng-click="save()">Save</button>
+        <!-- <video ng-show="challenge.img" src="{{$sce.trustAsResourceUrl(challenge.clip)}}" poster="{{$sce.trustAsResourceUrl(challenge.img)}}"></video>  -->
+      </div>
+    </ion-item>
+  </ion-list>
+</ion-content>
