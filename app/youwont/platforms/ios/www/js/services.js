@@ -129,6 +129,7 @@ angular.module('youwont.services', [])
     db.addChallengeToUser = function(challenge){
       
     }
+
     db.addNewChallenge = function(challenge) {
       var currentUser = db.ref.getAuth().uid;
       var obj = {};
@@ -137,7 +138,7 @@ angular.module('youwont.services', [])
         if (challenge && challenge.title && challenge.description){
           challenge['friends'] = [];
           angular.forEach(friendsList, function (item, collection) {
-            challenge['friends'] = item.id;
+            challenge['friends'].push(item.id);
           });
           obj[challenge.id] = challenge;
           getBase64FromFile(challenge.clip, function (data) {
@@ -147,6 +148,7 @@ angular.module('youwont.services', [])
               db.ref.child(currentUser).set(obj);
             });
           });
+
         } else {
           console.error('addNewChallenge is missing params')
         }

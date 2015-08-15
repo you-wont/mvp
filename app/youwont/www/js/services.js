@@ -120,9 +120,7 @@ angular.module('youwont.services', [])
           id: facebookID,
           name: userName,
           profilePicture: userProfilePicture,
-          friends: {
-            "Mark Robson" :{id:"10153502325756226",name:"Mark Robson" }
-          }
+          friends: []
         });    
       }
     };
@@ -153,19 +151,21 @@ angular.module('youwont.services', [])
     };
 
     db.addFriend = function(friend,callback){
-        //get user object  
-        var currentUser = db.ref.getAuth().facebook.displayName;
-      
-        db.ref.child('users').orderByChild('name').equalTo(currentUser).on('child_added',  function(snapshot){ 
+        //get user object
         
-          if (friend){
+        var currentUser = db.ref.getAuth().uid;
+        var ref = new Firebase("https://sayiwont.firebaseio.com/users/"+currentUser+"/friends");
+        if (friend){
            //
+           var friendObject = {
+            id: friend.id,
+            name: friend.name,
+            profilePicture: friend.profilePicture
+           }
+           
+        ref.child(friendObject.id).set(friendObject);
+      }
 
-            
-          }
-          //add friend to user object's friends array
-          //snapshot.val().friends.push(friend)
-        })
     }
 
     db.getFriends = function(callback){
