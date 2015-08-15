@@ -87,9 +87,11 @@ youwontController.controller('videoCtrl', function ($scope, challenges, $ionicPl
 
   $scope.save = function () {
     var newChallenge;
-    if ($scope.challenge.img && !!$scope.challenge.clip) {
+    if ($scope.challenge.img && $scope.challenge.clip) {
+      //create a copy
+      challenges.push(angular.copy($scope.challenge));
+      //create another copy for the server
       newChallenge = angular.copy($scope.challenge);
-      challenges.push(newChallenge);
       DatabaseService.addNewChallenge(newChallenge);
       //reset previous
       reset();

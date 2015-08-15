@@ -120,7 +120,7 @@ angular.module('youwont.services', [])
           id: facebookID,
           name: userName,
           profilePicture: userProfilePicture,
-          friends: { "Mark Robson" :{id:"10153502325756226",name:"Mark Robson"}},
+          friends: [],
           challenges: []
         });    
       }
@@ -138,7 +138,7 @@ angular.module('youwont.services', [])
         if (challenge && challenge.title && challenge.description){
           challenge['friends'] = [];
           angular.forEach(friendsList, function (item, collection) {
-            challenge['friends'].push(item.id);
+            challenge['friends'] = item.id;
           });
           obj[challenge.id] = challenge;
           getBase64FromFile(challenge.clip, function (data) {

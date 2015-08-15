@@ -120,10 +120,15 @@ angular.module('youwont.services', [])
           id: facebookID,
           name: userName,
           profilePicture: userProfilePicture,
-          friends: []
+          friends: [],
+          challenges: []
         });    
       }
     };
+
+    db.addChallengeToUser = function(challenge){
+      
+    }
 
     db.addNewChallenge = function(challenge) {
       var currentUser = db.ref.getAuth().uid;
