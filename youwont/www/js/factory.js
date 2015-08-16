@@ -14,7 +14,7 @@ facebookLoginFactory.factory('authLogin', function($state, DatabaseService) {
   login.ref = new Firebase(appURL);
   //function to perform OAuth login with FB
   login.logUserIn = function() {
-    alert('trying our best')
+   
     login.ref.authWithOAuthPopup("facebook", function(error, authData) {
         
       if (error) {

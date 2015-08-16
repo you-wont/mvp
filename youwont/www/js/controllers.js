@@ -1,11 +1,14 @@
 var youwontController = angular.module('youwont.controllers', ['FacebookLogin', 'Challenges', 'ngCordova','youwont.services']);
 
-youwontController.controller('challengeCtrl', function ($scope, challenges) {
+youwontController.controller('challengeCtrl', function ($scope, challenges,DatabaseService) {
   $scope.challenges = challenges;
+  console.log('hello world')
+  DatabaseService.getUserChallenges()
 });
 
 youwontController.controller('responsesCtrl', function ($scope, challenges) {
   $scope.challenges = challenges;
+
 });
 
 youwontController.controller('responseCtrl', function ($scope, $stateParams, challenges) {

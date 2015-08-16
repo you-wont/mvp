@@ -120,67 +120,81 @@ angular.module('youwont.services', [])
           id: facebookID,
           name: userName,
           profilePicture: userProfilePicture,
-          friends: { "Mark Robson" :{id:"10153502325756226",name:"Mark Robson"}}
+          friends: { "Mark Robson" :{id:"10153502325756226",name:"Mark Robson"}},
+          challenges: [{test:'test'}]
         });    
       }
     };
 
+   
     db.addNewChallenge = function(challenge) {
 
       var currentUser = db.ref.getAuth().uid;
       var obj = {};
+      var friends = [];
       db.ref = new Firebase("https://sayiwont.firebaseio.com/challenges/");
-
-      if (challenge && challenge.title && challenge.description){
-        obj[challenge.id] = challenge;
-        // $cordovaFile.readAsDataURL(challenge.clip)
-        //   .then(function (err, data) {
-        //     console.log("err: ", err);
-        //     console.log("got the data: ", data);
-        //     //db.ref.child(currentUser).set(obj);
-        //   }, function (err) {
-        //     console.log(err);
-        //   })
-        getBase64FromFile(challenge.clip, function (data) {
-          challenge.clip = data;
-          getBase64FromFile(challenge.img, function (data) {
-            challenge.img = data;
-            console.log("full object", obj);
-            console.log("pushing! =====================================");
-            db.ref.child(currentUser).set(obj);
+      db.getFriends(function(friendsList){
+        console.log('get friends called')
+        if (challenge && challenge.title && challenge.description){
+          challenge['friends'] = friendsList;
+          obj[challenge.id] = challenge;
+          getBase64FromFile(challenge.clip, function (data) {
+            challenge.clip = data;
+            getBase64FromFile(challenge.img, function (data) {
+              challenge.img = data;
+              db.ref.child(currentUser).set(obj);
+            });
           });
-        });
-        //read image thumb
-        //get binary data and convert to base64
-        //read video file
-        //get binary data and convert to base64
-        //upload
-        // $scope.challenge.clip = "data:video/quicktime;base64," + btoa(videoData);
-        // $scope.challenge.img = "data:image/png;base64," + btoa($scope.generateThumb(data));
 
-        //"data:video/quicktime;base64"
-        //"data:image/png;base64"
+          db.addToFriendsChallenges(friendsList,challenge);
 
-      } else {
-        console.error('addNewChallenge is missing params')
-      }
-
+        } else {
+          console.error('addNewChallenge is missing params')
+        }
+        
+      })
+      
+      
     };
 
-    db.addFriend = function(friend,callback){
-        //get user object  
-        var currentUser = db.ref.getAuth().facebook.displayName;
-      
-        db.ref.child('users').orderByChild('name').equalTo(currentUser).on('child_added',  function(snapshot){ 
-        
-          if (friend){
-           //
-
-            
+    db.addToFriendsChallenges = function(friendsList,challenge){
+        //loop through that users list of friends and add that challenge to their challenges list
+        //https://sayiwont.firebaseio.com/users/facebook%3A10154050574837565/challenges
+        for (var i = 0; i <friendsList.length; i++){
+          if (challenge){
+            console.dir(friendsList[i].id)
+            var ref = new Firebase("https://sayiwont.firebaseio.com/users/");
+            ref.child("facebook:"+friendsList[i].id).child('challenges').set(challenge);
           }
-          //add friend to user object's friends array
-          //snapshot.val().friends.push(friend)
-        })
+        }
+
+        /*if (friendsList){
+          for (var i = 0; i < friendsList.length; i++){
+            console.dir(friendsList[i].name);
+            if (friendsList[i].challenges && challenge){
+                friendsList[i].challenges.push(challenge.id)
+            }
+          }
+        }*/
+    }
+
+    db.addFriend = function(friend,callback){
+        //get user object
+        
+        var currentUser = db.ref.getAuth().uid;
+        var ref = new Firebase("https://sayiwont.firebaseio.com/users/"+currentUser+"/friends");
+        console.dir(friend)
+        if (friend){
+           //
+           var friendObject = {
+            id: friend.id,
+            name: friend.name,
+            profilePicture: friend.profilePicture
+           }
+           
+        ref.child(friendObject.id).set(friendObject);
+      }
+
     }
 
     db.getFriends = function(callback){
@@ -196,5 +210,24 @@ angular.module('youwont.services', [])
       });
 
     }
+
+
+    db.getUserChallenges = function(callback){
+
+      var ref = new Firebase("https://sayiwont.firebaseio.com/challenges");
+      var challenges = [];
+
+      ref.orderByKey().on('child_added',function(snapshot){
+        console.dir(snapshot.val())
+      });
+
+
+    }
+
+    db.loadChallengeByID = function(challengeID){
+
+    }
+
+
     return db;
   });

@@ -1,7 +1,6 @@
 <ion-content ng-controller"challengeCtrl" style="margin-bottom: 100px;">
   <ion-list ng-show="challenges.length > 0">
     <div ng-repeat="challenge in challenges" ui-sref="response({{challenge}})">
-{{challenge}}
       <!-- Challenge Header -->
       <div class="item item-divider">{{challenge.title}}</div>
       <ion-item>

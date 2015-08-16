@@ -52,7 +52,6 @@ youwont.config(function ($stateProvider, $urlRouterProvider, $compileProvider) {
       templateUrl: 'templates/friends.html',
       controller: "friendsCtrl",
       onEnter: function($state,authLogin){
-        console.log("trying to display friends")
         if (!authLogin.checkState()){
           $state.go('home')
         }
@@ -89,7 +88,6 @@ youwont.run(function($ionicPlatform, $rootScope, authLogin, $state) {
 
     $rootScope.$on('$stateChangeStart',function(event, toState, toParams, fromState, fromParams) {
       if (toState.name !== 'login' && !authLogin.checkState()){
-        console.log('prevention')
           $state.go('login')
           event.preventDefault();
       }

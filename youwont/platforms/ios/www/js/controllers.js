@@ -1,11 +1,14 @@
 var youwontController = angular.module('youwont.controllers', ['FacebookLogin', 'Challenges', 'ngCordova','youwont.services']);
 
-youwontController.controller('challengeCtrl', function ($scope, challenges) {
+youwontController.controller('challengeCtrl', function ($scope, challenges,DatabaseService) {
   $scope.challenges = challenges;
+  console.log('hello world')
+  DatabaseService.getUserChallenges()
 });
 
 youwontController.controller('responsesCtrl', function ($scope, challenges) {
   $scope.challenges = challenges;
+
 });
 
 youwontController.controller('responseCtrl', function ($scope, $stateParams, challenges) {
@@ -25,6 +28,7 @@ youwontController.controller('loginCtrl', function ($scope,authLogin) {
 
 youwontController.controller('friendsCtrl', function ($scope,authLogin,DatabaseService) {
     DatabaseService.getFriends(function(friends){
+      console.dir(friends)
       $scope.friends = friends;
     });
    $scope.addFriend = DatabaseService.addFriend;
@@ -84,16 +88,6 @@ youwontController.controller('videoCtrl', function ($scope, challenges, $ionicPl
     var sliced = trueOrigin.slice(0, -4);
     return sliced + '.png';
   }
-
-  // $scope.testChallenge = function(){
-  //   //console.log('title: ' + $scope.challenge.title);
-  //   var title = $scope.challenge.title;
-  //   var description = $scope.challenge.description;
-  //   var user = $scope.user;
-  //   console.log('usr: ' + user)
-  //   //console.log('description: ' + $scope.challenge.description)
-  //   DatabaseService.addNewChallenge(title,description,user);
-  // }
 
   $scope.save = function () {
     var newChallenge;
