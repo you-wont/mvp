@@ -65,11 +65,14 @@ facebookLoginFactory.factory('authLogin', function($state, DatabaseService) {
 //Factory to share challenges and responses
 var challengesFactory = angular.module('Challenges', []);
 challengesFactory.factory('challenges', function () {
-
 	var challenges = [];
-
 	return challenges;
+});
 
+var friendsFactory = angular.module('Friends', ['localStorageFactory']);
+friendsFactory.factory('friends', function ($localstorage) {
+  var friends = $localstorage.get('friends') || [];
+  return friends;
 });
 
 var localStorageFactory = angular.module('ionic.utils', []);

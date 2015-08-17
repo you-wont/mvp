@@ -1,7 +1,16 @@
 var youwontController = angular.module('youwont.controllers', ['FacebookLogin', 'Challenges', 'ngCordova','youwont.services']);
 
-youwontController.controller('challengeCtrl', function ($scope, challenges, DatabaseService) {
+youwontController.controller('challengeCtrl', function ($scope, challenges, DatabaseService, $sce) {
   $scope.challenges = challenges;
+  $scope.getVideo = function (clip) {
+    if (clip.match("data:")) {
+      console.log("is base64 data");
+      return $sce.trustAsResourceUrl(clip);
+    } else {
+      console.log("video url");
+      return clip;
+    }
+  }
   DatabaseService.updateUserChallenges();
 });
 
@@ -9,13 +18,27 @@ youwontController.controller('responsesCtrl', function ($scope, challenges) {
   $scope.challenges = challenges;
 });
 
-youwontController.controller('responseCtrl', function ($scope, $stateParams, challenges) {
+youwontController.controller('responseCtrl', function ($scope, $stateParams, challenges, $sce) {
+
   $scope.challenge = null;
+
   angular.forEach(challenges, function (value, key) {
     if ($stateParams.id === value.id) {
+      console.log("Got something", value);
       $scope.challenge = value;
     }
   });
+
+  $scope.getVideo = function (clip) {
+    if (clip.match("data:")) {
+      console.log("is base64 data");
+      return $sce.trustAsResourceUrl(clip);
+    } else {
+      console.log("video url");
+      return clip;
+    }
+  }
+
 });
 
 youwontController.controller('loginCtrl', function ($scope,authLogin) {

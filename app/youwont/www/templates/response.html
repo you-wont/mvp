@@ -13,7 +13,7 @@
         <p>{{challenge.people}}</p> 
         <i class="icon ion-heart">{{challenge.likes}}</i>
       </a>
-      <video src="{{challenge.clip}}" poster="{{challenge.img}}"></video>
+      <video src="{{getVideo(challenge.clip)}}" poster="{{challenge.img}}" controls></video>
     </ion-item>
     <!-- Responses divider -->
     <div class="item item-divider">Responses to {{challenge.title}}</div>
