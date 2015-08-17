@@ -129,6 +129,7 @@ angular.module('youwont.services', [])
     db.addChallengeToUser = function(challenge){
       
     }
+
     db.addNewChallenge = function(challenge) {
 
       var currentUser = db.ref.getAuth().uid;
@@ -184,5 +185,21 @@ angular.module('youwont.services', [])
       });
 
     }
+
+    db.updateUserChallenges = function(callback){
+      var currentUser = db.ref.getAuth().uid;
+      var ref = new Firebase("https://sayiwont.firebaseio.com/users/"+currentUser+"/");
+       var challenges = [];
+       ref.orderByChild('challenges').on('child_added', function(snapshot) {
+          if(snapshot.val().id){
+            console.dir(snapshot.val)
+            challenges.push(snapshot.val())
+          }
+          if(callback){
+            callback(challenges)
+          }
+        });
+     }
+
     return db;
   });
