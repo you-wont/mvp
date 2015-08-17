@@ -5,7 +5,7 @@
       <div class="item item-divider">{{challenge.title}}</div>
       <ion-item>
         <a ui-sref="responses" class="item item-thumbnail-left">
-          <img src="{{$sce.trustAsResourceUrl(challenge.img)}}" alt="chall">
+          <img src="{{challenge.img}}" alt="chall">
           <p>{{challenge.description}}</p>
           <p>{{challenge.people}}</p> 
           <i class="icon ion-heart">{{challenge.likes}}</i>
