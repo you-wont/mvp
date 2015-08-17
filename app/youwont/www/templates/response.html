@@ -23,8 +23,9 @@
         <img src="http://placehold.it/50x50" alt="chall">
         <h2>{{response.title}}</h2>
         <p>{{response.description}}</p>
-        <p>{{response.people}}</p> 
-        <i class="icon ion-heart">{{response.likes}}</i>
+        <ul ng-show="challenge.friends.length > 0">
+          <li ng-repeat="friend in challenge.friend"><img src="{{friend.profilePicture}}" /></li>
+        </ul>
       </a>
     </ion-item>
   </ion-list>

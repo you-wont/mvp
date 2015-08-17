@@ -7,8 +7,9 @@
         <a ui-sref="responses" class="item item-thumbnail-left">
           <img src="{{challenge.img}}" alt="chall">
           <p>{{challenge.description}}</p>
-          <p>{{challenge.people}}</p> 
-          <i class="icon ion-heart">{{challenge.likes}}</i>
+          <ul ng-show="challenge.friends.length > 0">
+            <li ng-repeat="friend in challenge.friend"><img src="{{friend.profilePicture}}" /></li>
+          </ul>
         </a>
       </ion-item>
     </div>

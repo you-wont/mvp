@@ -1,4 +1,4 @@
-angular.module('youwont.services', [])
+angular.module('youwont.services', ['Challenges'])
   .service('VideoService', function($q) {
 
     var deferred = $q.defer();
@@ -85,7 +85,7 @@ angular.module('youwont.services', [])
     }
 
   })
-  .service("DatabaseService", function($cordovaFile) {
+  .service("DatabaseService", function($cordovaFile, challenges) {
 
     var db = {};
     db.ref = new Firebase("https://sayiwont.firebaseio.com/");
@@ -126,8 +126,6 @@ angular.module('youwont.services', [])
       }
     };
 
-
-
     db.addNewChallenge = function(challenge) {
 
       var currentUser = db.ref.getAuth().uid;
@@ -155,39 +153,18 @@ angular.module('youwont.services', [])
       
     };
 
-    db.addFriend = function(friend,callback){
-        //get user object
-        
-        var currentUser = db.ref.getAuth().uid;
-        var ref = new Firebase("https://sayiwont.firebaseio.com/users/"+currentUser+"/friends");
-        if (friend){
-           //
-           var friendObject = {
-            id: friend.id,
-            name: friend.name,
-            profilePicture: friend.profilePicture
-           }
-           
+    db.addFriend = function(friend,callback) {
+      var currentUser = db.ref.getAuth().uid;
+      var ref = new Firebase("https://sayiwont.firebaseio.com/users/"+currentUser+"/friends");
+      if (friend){
+        var friendObject = {
+          id: friend.id,
+          name: friend.name,
+          profilePicture: friend.profilePicture
+        }
         ref.child(friendObject.id).set(friendObject);
       }
-
     }
-
-   db.updateUserChallenges = function(callback){
-      var currentUser = db.ref.getAuth().uid;
-      var ref = new Firebase("https://sayiwont.firebaseio.com/users/"+currentUser+"/");
-       var challenges = [];
-       ref.orderByChild('challenges').on('child_added',function(snapshot){
-       
-        if(snapshot.val().id){
-          console.dir(snapshot.val)
-          challenges.push(snapshot.val())
-        }
-        if(callback){
-          callback(challenges)
-        }
-        });
-   }
 
     db.getFriends = function(callback){
       var ref = new Firebase("https://sayiwont.firebaseio.com/users")
@@ -203,38 +180,42 @@ angular.module('youwont.services', [])
 
     }
 
-    db.addToFriendsChallenges = function(friendsList,challenge){
-        //loop through that users list of friends and add that challenge to their challenges list
-        for (var i = 0; i <friendsList.length; i++){
-          if (challenge){
-            console.dir(friendsList[i].id)
-            var ref = new Firebase("https://sayiwont.firebaseio.com/users/");
-            ref.child("facebook:"+friendsList[i].id).child('challenges').set(challenge);
-          }
+    db.addToFriendsChallenges = function(friendsList, challenge){
+      //loop through that users list of friends and add that challenge to their challenges list
+      for (var i = 0; i <friendsList.length; i++){
+        if (challenge){
+          console.dir(friendsList[i].id)
+          var ref = new Firebase("https://sayiwont.firebaseio.com/users/");
+          ref.child("facebook:"+friendsList[i].id).child('challenges').set(challenge);
         }
-
+      }
     }
 
     db.updateUserChallenges = function(callback){
       var currentUser = db.ref.getAuth().uid;
       var ref = new Firebase("https://sayiwont.firebaseio.com/users/"+currentUser+"/");
-       var challenges = [];
-       ref.orderByChild('challenges').on('child_added', function(snapshot) {
-          if(snapshot.val().id){
-            console.dir(snapshot.val)
-            challenges.push(snapshot.val())
-          }
-          if(callback){
-            callback(challenges)
-          }
-        });
-     }
+      ref.orderByChild('challenges').on('value', function(snapshot) {
+        if(snapshot.val().id){
+          db.getChallenges(snapshot.val().challenges);
+        }
+      });
+    }
 
-     db.addResponseToChallenge = function(currentChallenge,response){
+    db.addResponseToChallenge = function(currentChallenge,response){
       var ref = new Firebase("https://sayiwont.firebaseio.com/challenges/");
       ref.child("").child('responses').set(response);
     }
 
+    db.getChallenges = function () {
+      console.log("in getChallenges", challenges);
+      var currentUser = db.ref.getAuth().uid;
+      var ref = new Firebase("https://sayiwont.firebaseio.com/challenges/"+currentUser+"/");
+      ref.on('value', function(snapshot) {
+        angular.forEach(snapshot.val(), function (challenge) {
+          challenges.push(challenge);
+        });
+      });
+    }
 
     return db;
   });
