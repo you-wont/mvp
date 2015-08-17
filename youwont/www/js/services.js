@@ -197,6 +197,8 @@ angular.module('youwont.services', [])
 
     }
 
+
+    //NEEDS REFACTORING!!!! - get all users not just friends
     db.getFriends = function(callback){
       var ref = new Firebase("https://sayiwont.firebaseio.com/users")
       var friends = [];
@@ -212,14 +214,24 @@ angular.module('youwont.services', [])
     }
 
 
-    db.getUserChallenges = function(callback){
+    db.updateUserChallenges = function(callback){
 
-      var ref = new Firebase("https://sayiwont.firebaseio.com/challenges");
+      var currentUser = db.ref.getAuth().uid;
+      var ref = new Firebase("https://sayiwont.firebaseio.com/users/"+currentUser+"/");
       var challenges = [];
 
-      ref.orderByKey().on('child_added',function(snapshot){
-        console.dir(snapshot.val())
+      ref.orderByChild('challenges').on('child_added',function(snapshot){
+        
+        if(snapshot.val().id){
+          console.dir(snapshot.val)
+          challenges.push(snapshot.val())
+        }
+        if(callback){
+          callback(challenges)
+        }
       });
+
+
 
 
     }

@@ -3,7 +3,9 @@ var youwontController = angular.module('youwont.controllers', ['FacebookLogin', 
 youwontController.controller('challengeCtrl', function ($scope, challenges,DatabaseService) {
   $scope.challenges = challenges;
   console.log('hello world')
-  DatabaseService.getUserChallenges()
+  DatabaseService.updateUserChallenges(function(challenges){
+    console.dir(challenges)
+  })
 });
 
 youwontController.controller('responsesCtrl', function ($scope, challenges) {
