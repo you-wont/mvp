@@ -2,6 +2,7 @@ var youwontController = angular.module('youwont.controllers', ['FacebookLogin', 
 
 youwontController.controller('challengeCtrl', function ($scope, challenges, DatabaseService, $sce) {
   $scope.challenges = challenges;
+
   $scope.getVideo = function (clip) {
     if (clip.match("data:")) {
       console.log("is base64 data");
@@ -11,11 +12,15 @@ youwontController.controller('challengeCtrl', function ($scope, challenges, Data
       return clip;
     }
   }
+
   DatabaseService.updateUserChallenges();
+
 });
 
-youwontController.controller('responsesCtrl', function ($scope, challenges) {
+youwontController.controller('responsesCtrl', function ($scope, challenges,DatabaseService) {
+
   $scope.challenges = challenges;
+  
 });
 
 youwontController.controller('responseCtrl', function ($scope, $stateParams, challenges, $sce) {
@@ -37,6 +42,10 @@ youwontController.controller('responseCtrl', function ($scope, $stateParams, cha
       console.log("video url");
       return clip;
     }
+  }
+
+  $scope.respond = function(challenge,response){
+    console.log('Challenge:' + challenge.id)
   }
 
 });
