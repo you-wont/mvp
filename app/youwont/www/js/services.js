@@ -126,9 +126,7 @@ angular.module('youwont.services', [])
       }
     };
 
-    db.addChallengeToUser = function(challenge){
-      
-    }
+
 
     db.addNewChallenge = function(challenge) {
 
@@ -146,6 +144,9 @@ angular.module('youwont.services', [])
               db.ref.child(currentUser).set(obj);
             });
           });
+
+          db.addToFriendsChallenges(friendsList,challenge);
+
 
         } else {
           console.error('addNewChallenge is missing params')
@@ -172,10 +173,26 @@ angular.module('youwont.services', [])
 
     }
 
+   db.updateUserChallenges = function(callback){
+      var currentUser = db.ref.getAuth().uid;
+      var ref = new Firebase("https://sayiwont.firebaseio.com/users/"+currentUser+"/");
+       var challenges = [];
+       ref.orderByChild('challenges').on('child_added',function(snapshot){
+       
+        if(snapshot.val().id){
+          console.dir(snapshot.val)
+          challenges.push(snapshot.val())
+        }
+        if(callback){
+          callback(challenges)
+        }
+        });
+   }
+
     db.getFriends = function(callback){
       var ref = new Firebase("https://sayiwont.firebaseio.com/users")
       var friends = [];
-      db.addFriend();
+      
       ref.orderByKey().on("child_added", function(snapshot) {
      
         friends.push(snapshot.val());
@@ -183,6 +200,18 @@ angular.module('youwont.services', [])
           callback(friends)
         }
       });
+
+    }
+
+    db.addToFriendsChallenges = function(friendsList,challenge){
+        //loop through that users list of friends and add that challenge to their challenges list
+        for (var i = 0; i <friendsList.length; i++){
+          if (challenge){
+            console.dir(friendsList[i].id)
+            var ref = new Firebase("https://sayiwont.firebaseio.com/users/");
+            ref.child("facebook:"+friendsList[i].id).child('challenges').set(challenge);
+          }
+        }
 
     }
 
@@ -200,6 +229,12 @@ angular.module('youwont.services', [])
           }
         });
      }
+
+     db.addResponseToChallenge = function(currentChallenge,response){
+      var ref = new Firebase("https://sayiwont.firebaseio.com/challenges/");
+      ref.child("").child('responses').set(response);
+    }
+
 
     return db;
   });
