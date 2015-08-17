@@ -19,3 +19,8 @@ video {
   width: 100%;
   margin 10px;
 }
+
+respond {
+	position:aboslute;
+	left:20%;
+}

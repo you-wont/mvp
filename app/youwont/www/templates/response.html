@@ -2,21 +2,22 @@
   <ion-list ng-show="challenge">
     <!-- Challenge Header -->
     <div class="item item-divider">
-      {{challenge.title}}
+     {{challenge.title}} 
+     <button class="respond" ng-click="respond(challenge,response)">Respond</button>
     </div>
     <!-- Display Current Challenge -->
     <ion-item>
       <a class="item item-thumbnail-left" href="#">
         <img src="{{challenge.img}}" alt="chall">
-        <h2>{{challenge.title}}</h2>
-        <p>{{challenge.description}}</p>
-        <p>{{challenge.people}}</p> 
+        <h2>Title: {{challenge.title}}</h2>
+        <p>Description: {{challenge.description}}</p>
         <i class="icon ion-heart">{{challenge.likes}}</i>
       </a>
-      <video src="{{challenge.clip}}" poster="{{challenge.img}}"></video>
+     <!-- <video src="{{challenge.clip}}" poster="{{challenge.img}}"></video>-->
     </ion-item>
     <!-- Responses divider -->
     <div class="item item-divider">Responses to {{challenge.title}}</div>
+    
     <!-- Display responses -->
     <ion-item ng-repeat="response in challenge.responses">
       <a class="item item-thumbnail-left" href="#">
@@ -30,6 +31,6 @@
     </ion-item>
   </ion-list>
   <ion-list ng-show="!challenge">
-    no responses!
+    No Responses
   </ion-list>
 </ion-content>
