@@ -113,38 +113,35 @@ angular.module('youwont.services', [])
     }
 
     db.addNewUser = function(userName, userProfilePicture, facebookID, uid) {
-      //Adding new user to our database 
-      var ref = new Firebase("https://sayiwont.firebaseio.com/");    
-      if (userName && userProfilePicture && facebookID && uid) {     
-        ref.child("users").child(uid).set({            
+      //Adding new user to our database 
+      var ref = new Firebase("https://sayiwont.firebaseio.com/");    
+      if (userName && userProfilePicture && facebookID && uid) {     
+        ref.child("users").child(uid).set({            
           id: facebookID,
           name: userName,
           profilePicture: userProfilePicture,
-          friends: [],
+          friends: { "Mark Robson" :{id:"10153502325756226",name:"Mark Robson"}},
           challenges: []
-        });    
+        });    
       }
     };
 
     db.addChallengeToUser = function(challenge){
       
     }
-
     db.addNewChallenge = function(challenge) {
+
       var currentUser = db.ref.getAuth().uid;
       var obj = {};
       db.ref = new Firebase("https://sayiwont.firebaseio.com/challenges/");
       db.getFriends(function(friendsList){
         if (challenge && challenge.title && challenge.description){
-          challenge['friends'] = [];
-          angular.forEach(friendsList, function (item, collection) {
-            challenge['friends'] = item.id;
-          });
+          challenge['friends'] = friendsList;
           obj[challenge.id] = challenge;
           getBase64FromFile(challenge.clip, function (data) {
-            challenge.clip = "data:video/quicktime;base64," + data;
+            challenge.clip = data;
             getBase64FromFile(challenge.img, function (data) {
-              challenge.img = "data:image/png;base64," + data;
+              challenge.img = data;
               db.ref.child(currentUser).set(obj);
             });
           });
@@ -153,6 +150,7 @@ angular.module('youwont.services', [])
           console.error('addNewChallenge is missing params')
         }
       })
+      
     };
 
     db.addFriend = function(friend,callback){
