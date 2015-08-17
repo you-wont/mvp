@@ -1,5 +1,9 @@
 /* Empty. Add your own CSS if you like */
 
+.content {
+  margin-bottom: 100px;
+}
+
 #fbLoginButton{
 
 	position:absolute;
@@ -9,4 +13,9 @@
 	font-size:18px;
 	border-radius: 25px;
 	
+}
+
+video {
+  width: 100%;
+  margin 10px;
 }

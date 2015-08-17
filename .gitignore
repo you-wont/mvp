@@ -27,4 +27,5 @@ build/Release
 
 node_modules
 app/youwont/platforms
+app/youwont/platforms/**/*
 .DS_Store
