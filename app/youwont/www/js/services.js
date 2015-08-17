@@ -146,7 +146,6 @@ angular.module('youwont.services', ['Challenges'])
 
           db.addToFriendsChallenges(friendsList,challenge);
 
-
         } else {
           console.error('addNewChallenge is missing params')
         }
@@ -213,10 +212,7 @@ angular.module('youwont.services', ['Challenges'])
       var ref = new Firebase("https://sayiwont.firebaseio.com/challenges/"+currentUser+"/");
       ref.on('value', function(snapshot) {
         angular.forEach(snapshot.val(), function (challenge) {
-          
-          challenges.push(challenge);
-          //challenges['id']=challenge;
-          
+          challenges[challenge.id] = challenge;
         });
       });
     }
