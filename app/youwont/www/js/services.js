@@ -126,17 +126,6 @@ angular.module('youwont.services', [])
       }
     };
 
-        db.addToFriendsChallenges = function(friendsList,challenge){
-        //loop through that users list of friends and add that challenge to their challenges list
-        for (var i = 0; i <friendsList.length; i++){
-          if (challenge){
-            console.dir(friendsList[i].id)
-            var ref = new Firebase("https://sayiwont.firebaseio.com/users/");
-            ref.child("facebook:"+friendsList[i].id).child('challenges').set(challenge);
-          }
-        }
-
-    }
 
     db.addNewChallenge = function(challenge) {
 
@@ -202,7 +191,7 @@ angular.module('youwont.services', [])
     db.getFriends = function(callback){
       var ref = new Firebase("https://sayiwont.firebaseio.com/users")
       var friends = [];
-      //db.addFriend();
+      
       ref.orderByKey().on("child_added", function(snapshot) {
      
         friends.push(snapshot.val());
@@ -216,6 +205,19 @@ angular.module('youwont.services', [])
     db.addResponseToChallenge = function(currentChallenge,response){
       var ref = new Firebase("https://sayiwont.firebaseio.com/challenges/");
       ref.child("").child('responses').set(response);
+    }
+
+
+        db.addToFriendsChallenges = function(friendsList,challenge){
+        //loop through that users list of friends and add that challenge to their challenges list
+        for (var i = 0; i <friendsList.length; i++){
+          if (challenge){
+            console.dir(friendsList[i].id)
+            var ref = new Firebase("https://sayiwont.firebaseio.com/users/");
+            ref.child("facebook:"+friendsList[i].id).child('challenges').set(challenge);
+          }
+        }
+
     }
     return db;
   });
