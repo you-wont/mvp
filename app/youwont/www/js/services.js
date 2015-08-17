@@ -134,6 +134,7 @@ angular.module('youwont.services', ['Challenges'])
       db.getFriends(function(friendsList){
         if (challenge && challenge.title && challenge.description){
           challenge['friends'] = friendsList;
+
           obj[challenge.id] = challenge;
           getBase64FromFile(challenge.clip, function (data) {
             challenge.clip = data;
@@ -203,7 +204,7 @@ angular.module('youwont.services', ['Challenges'])
 
     db.addResponseToChallenge = function(currentChallenge,response){
       var ref = new Firebase("https://sayiwont.firebaseio.com/challenges/");
-      ref.child("").child('responses').set(response);
+      ref.child(currentChallenge.userID).child(currentChallenge.id).child('responses').set(response);
     }
 
     db.getChallenges = function () {
@@ -212,8 +213,19 @@ angular.module('youwont.services', ['Challenges'])
       var ref = new Firebase("https://sayiwont.firebaseio.com/challenges/"+currentUser+"/");
       ref.on('value', function(snapshot) {
         angular.forEach(snapshot.val(), function (challenge) {
+          
           challenges.push(challenge);
+          //challenges['id']=challenge;
+          
         });
+      });
+    }
+
+    db.getUserByID = function(userID){
+      var ref = new Firebase("https://sayiwont.firebaseio.com/users/"+userID + "/");
+      ref.on('value',function(snapshot){
+       
+        return snapshot.val();
       });
     }
 

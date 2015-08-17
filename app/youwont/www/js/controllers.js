@@ -2,11 +2,20 @@ var youwontController = angular.module('youwont.controllers', ['FacebookLogin', 
 
 youwontController.controller('challengeCtrl', function ($scope, challenges, DatabaseService) {
   $scope.challenges = challenges;
+  //$scope.length = Object.keys($scope.challenges).length;
+
+
   DatabaseService.updateUserChallenges();
+  
+  
+
+
 });
 
-youwontController.controller('responsesCtrl', function ($scope, challenges) {
+youwontController.controller('responsesCtrl', function ($scope, challenges,DatabaseService) {
+
   $scope.challenges = challenges;
+  
 });
 
 youwontController.controller('responseCtrl', function ($scope, $stateParams, challenges) {
@@ -16,6 +25,9 @@ youwontController.controller('responseCtrl', function ($scope, $stateParams, cha
       $scope.challenge = value;
     }
   });
+  $scope.respond = function(challenge,response){
+    console.log('Challenge:' + challenge.id)
+  }
 });
 
 youwontController.controller('loginCtrl', function ($scope,authLogin) {
