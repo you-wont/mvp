@@ -66,6 +66,7 @@ facebookLoginFactory.factory('authLogin', function($state, DatabaseService) {
 var challengesFactory = angular.module('Challenges', []);
 challengesFactory.factory('challenges', function () {
 	var challenges = {};
+  
 	return challenges;
 });
 
