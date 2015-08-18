@@ -2,8 +2,9 @@ var youwontController = angular.module('youwont.controllers', ['FacebookLogin', 
 
 youwontController.controller('challengeCtrl', function ($scope, challenges, DatabaseService, $sce) {
   $scope.challenges = challenges;
-
   //TODO: add this as a directive - duplicated below
+  $scope.length = 1 || Object.keys($scope.challenges).length;
+  //console.log(Object.keys($scope.challenges).length)
   $scope.getVideo = function (clip) {
     if (clip.match("data:")) {
       return $sce.trustAsResourceUrl(clip);
@@ -22,11 +23,13 @@ youwontController.controller('responsesCtrl', function ($scope, challenges,Datab
   
 });
 
-youwontController.controller('responseCtrl', function ($scope, $state, $stateParams, challenges, $sce) {
+youwontController.controller('responseCtrl', function ($scope, $state, $stateParams, challenges, $sce,DatabaseService) {
 
   $scope.challenge = null;
-
+  console.log('state params:' + $stateParams.id)
   angular.forEach(challenges, function (value, key) {
+
+    
     if ($stateParams.id === value.id) {
       $scope.challenge = value;
     }
@@ -43,7 +46,31 @@ youwontController.controller('responseCtrl', function ($scope, $state, $statePar
   }
 
   $scope.respond = function(id) {
-    $state.go('respond', { id : id });
+    $state.go('respond', { id : id });    
+    // if(clip){
+    //   if (clip.match("data:")) {
+    //     console.log("is base64 data");
+    //     return $sce.trustAsResourceUrl(clip);
+    //   } else {
+    //     console.log("video url");
+    //     return clip;
+    //   }
+    // }
+  }
+
+  $scope.responses = [];
+
+  // $scope.respond = function(challenge,response){
+   
+  //   response = {test:'test'}
+  //   DatabaseService.addResponseToChallenge(challenge.userID,challenge.id,response);
+  // }
+
+  if($stateParams.id && $scope.challenge) {
+    DatabaseService.getResponsesForChallenge($stateParams.id,$scope.challenge.userID,function(response){
+        $scope.responses.push(response);
+     });
+     console.dir($scope.responses);
   }
 
 });

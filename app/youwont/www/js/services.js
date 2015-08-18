@@ -223,9 +223,11 @@ angular.module('youwont.services', ['Challenges'])
       });
     }
 
-    db.addResponseToChallenge = function(currentChallenge,response){
-      var ref = new Firebase("https://sayiwont.firebaseio.com/challenges/");
-      ref.child(currentChallenge.userID).child(currentChallenge.id).child('responses').set(response);
+    db.addResponseToChallenge = function(userID,currentChallengeID,response){
+      if (userID && currentChallengeID && response){
+        var ref = new Firebase("https://sayiwont.firebaseio.com/challenges/");
+        ref.child(userID).child(currentChallengeID).child('responses').set(response);
+      }
     }
 
     db.getChallenges = function () {
@@ -245,6 +247,17 @@ angular.module('youwont.services', ['Challenges'])
        
         return snapshot.val();
       });
+    }
+
+    db.getResponsesForChallenge = function(challengeID,userID,callback){
+      var ref = new Firebase("https://sayiwont.firebaseio.com/challenges");
+      ref.child(userID).child(challengeID).child('responses').on('value',function(snapshot){
+          callback(snapshot.val())
+          console.dir(snapshot.val())
+
+          
+      })
+
     }
 
     return db;
