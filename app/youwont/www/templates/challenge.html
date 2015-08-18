@@ -4,7 +4,7 @@
       <!-- Challenge Header -->
       <div class="item item-divider">Title: {{challenge.title}}</div>
       <ion-item>
-        <a ui-sref="responses" class="item item-thumbnail-left">
+        <a ui-sref="response({{challenge}})" class="item item-thumbnail-left">
           <img src="{{challenge.img}}" alt="chall">
           <p>Description: {{challenge.description}}</p>
           <ul ng-show="challenge.friends.length > 0">

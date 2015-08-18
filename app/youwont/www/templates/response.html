@@ -8,7 +8,7 @@
     <!-- Display Current Challenge -->
     <ion-item>
       <a class="item item-thumbnail-left" href="#">
-        <img src="{{challenge.img}}" alt="chall">
+        <!--<img src="{{challenge.img}}" alt="chall">-->
         <h2>Title: {{challenge.title}}</h2>
         <p>Description: {{challenge.description}}</p>
         <i class="icon ion-heart">{{challenge.likes}}</i>
@@ -19,7 +19,7 @@
     <div class="item item-divider">Responses to {{challenge.title}}</div>
     
     <!-- Display responses -->
-    <ion-item ng-repeat="response in challenge.responses">
+    <ion-item ng-repeat="response in responses">
       <a class="item item-thumbnail-left" href="#">
         <img src="http://placehold.it/50x50" alt="chall">
         <h2>{{response.title}}</h2>
