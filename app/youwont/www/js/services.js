@@ -48,7 +48,7 @@ angular.module('youwont.services', ['Challenges'])
     }
 
     // Called on thumbnail creation success
-    // Generates the currect URL to the local moviefile
+    // Generates the correct URL to the local moviefile
     // Finally resolves the promies and returns the name
     function prevImageSuccess(succ) {
       var correctUrl = succ.slice(0, -4);
@@ -151,6 +151,28 @@ angular.module('youwont.services', ['Challenges'])
         }
       })
       
+    };
+
+    db.addNewResponse = function(response) {
+
+      var currentUser = db.ref.getAuth().uid;
+      var obj = {};
+      db.ref = new Firebase("https://sayiwont.firebaseio.com/challenges/" + currentUser + "/" + response.challengeId + "/responses");
+
+      if (response && response.title && response.description){
+        obj[response.id] = response;
+        getBase64FromFile(response.clip, function (data) {
+          response.clip = data;
+          getBase64FromFile(response.img, function (data) {
+            response.img = data;
+            db.ref.set(obj);
+          });
+        });
+
+      } else {
+        console.error('addNewResponse is missing params')
+      }
+    
     };
 
     db.addFriend = function(friend,callback) {

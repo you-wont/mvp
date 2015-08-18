@@ -11,7 +11,7 @@ youwont.config(function ($stateProvider, $urlRouterProvider, $compileProvider) {
       url : "/",
       templateUrl: 'templates/challenge.html',
       controller: "challengeCtrl",
-      onEnter: function($state,authLogin){
+      onEnter: function($state, authLogin){
         if (!authLogin.checkState()){
           $state.go('login')
         }
@@ -21,9 +21,9 @@ youwont.config(function ($stateProvider, $urlRouterProvider, $compileProvider) {
       url : "/responses",
       templateUrl: 'templates/responses.html',
       controller: "responsesCtrl",
-      onEnter: function($state,authLogin){
-        if (!authLogin.checkState()){
-          $state.go('login')
+      onEnter: function($state, authLogin) {
+        if (!authLogin.checkState()) {
+          $state.go('login');
         }
       }
     })
@@ -31,9 +31,9 @@ youwont.config(function ($stateProvider, $urlRouterProvider, $compileProvider) {
       url : "/response/:id",
       templateUrl: 'templates/response.html',
       controller: "responseCtrl",
-      onEnter: function($state,authLogin){
+      onEnter: function($state, authLogin){
         if (!authLogin.checkState()){
-          $state.go('login')
+          $state.go('login');
         }
       }
     })
@@ -41,9 +41,19 @@ youwont.config(function ($stateProvider, $urlRouterProvider, $compileProvider) {
       url : "/video",
       templateUrl: 'templates/video.html',
       controller: "videoCtrl",
-      onEnter: function($state,authLogin){
+      onEnter: function($state, authLogin){
         if (!authLogin.checkState()){
-          $state.go('login')
+          $state.go('login');
+        }
+      }
+    })
+    .state('respond', {
+      url : "/respond:id",
+      templateUrl: 'templates/video_response.html',
+      controller: "respondCtrl",
+      onEnter: function($state, authLogin){
+        if (!authLogin.checkState()) {
+          $state.go('login');
         }
       }
     })
@@ -51,9 +61,9 @@ youwont.config(function ($stateProvider, $urlRouterProvider, $compileProvider) {
       url : "/friends",
       templateUrl: 'templates/friends.html',
       controller: "friendsCtrl",
-      onEnter: function($state,authLogin){
+      onEnter: function($state, authLogin){
         if (!authLogin.checkState()){
-          $state.go('home')
+          $state.go('home');
         }
       }
       
@@ -62,9 +72,9 @@ youwont.config(function ($stateProvider, $urlRouterProvider, $compileProvider) {
       url : "/login",
       templateUrl: 'templates/login.html',
       controller: "loginCtrl",
-      onEnter: function($state,authLogin){
+      onEnter: function($state, authLogin){
         if (authLogin.checkState()){
-          $state.go('home')
+          $state.go('home');
         }
       }
       
